@@ -1,1 +1,7 @@
-{}
+{
+	"tabWidth": 2,
+	"printWidth": 220,
+	"singleQuote": false,
+	"endOfLine": "auto",
+	"semi": false
+}
