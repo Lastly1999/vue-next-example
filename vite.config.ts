@@ -5,18 +5,18 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    vueJsx(), // 自动引入组件和自动注册 new add
+    vueJsx(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [AntDesignVueResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [AntDesignVueResolver()],
     }),
   ],
   resolve: {
