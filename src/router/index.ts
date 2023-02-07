@@ -12,7 +12,6 @@ const whiteList = ["/login"]
 
 router.beforeEach((to, form, next) => {
   const { tokenInfo } = useAuthorization()
-  console.log(tokenInfo)
   // 为白名单中存在 即放行
   if (whiteList.includes(to.path)) {
     next()
