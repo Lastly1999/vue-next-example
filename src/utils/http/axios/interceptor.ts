@@ -22,7 +22,7 @@ export default class Interceptor {
     return new Promise((resolve, reject) => {
       this.axiosInstance(config)
         .then((res) => {
-          resolve(res.data)
+          resolve(res?.data || {})
         })
         .catch(reject)
     })

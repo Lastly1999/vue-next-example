@@ -5,16 +5,25 @@ import vue from "@vitejs/plugin-vue"
 import vueJsx from "@vitejs/plugin-vue-jsx"
 import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
+import Unocss from "unocss/vite"
+import { presetUno, presetAttributify, presetIcons } from "unocss"
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"
 
+const readEnvConfig = (mode: string) => {
+  return loadEnv(mode, __dirname)
+}
+
 // https://vitejs.dev/config/
-export default defineConfig((mode) => {
-  const env = loadEnv(mode.mode, process.cwd())
+export default defineConfig(({ mode }) => {
+  const env = readEnvConfig(mode)
 
   return {
     plugins: [
       vue(),
       vueJsx(),
+      Unocss({
+        presets: [presetUno(), presetAttributify(), presetIcons()],
+      }),
       AutoImport({
         resolvers: [AntDesignVueResolver()],
       }),
@@ -23,8 +32,9 @@ export default defineConfig((mode) => {
       }),
     ],
     server: {
+      cors: true,
       proxy: {
-        "/api": {
+        [env.VITE_APP_BASE_PROXY_URL]: {
           target: env.VITE_APP_BASE_URL,
           changeOrigin: true,
         },

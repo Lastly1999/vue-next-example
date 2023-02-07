@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios"
+import type { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios"
 
 export interface InterceptorTransform {
   /**
@@ -19,7 +19,7 @@ export interface InterceptorTransform {
   /**
    * @description: 请求之后的拦截器错误处理
    */
-  responseInterceptorsCatch?: (axiosInstance: AxiosResponse) => any
+  responseInterceptorsCatch?: (error: AxiosError<JsonResult<any>>) => any
 }
 
 export interface HttpRequestInterceptorConfig extends AxiosRequestConfig {
