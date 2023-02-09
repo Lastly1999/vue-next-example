@@ -1,4 +1,4 @@
-import type { DynamicRoutings, TokenInfo, UserInfo } from "@/service/model/authorizationModel"
+import type { DynamicRouting, TokenInfo, UserInfo } from "@/service/model/authorizationModel"
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import type { Router } from "vue-router"
@@ -36,14 +36,14 @@ export const useAuthorization = defineStore(
     }
 
     // 路由表
-    const appRoutes = ref<DynamicRoutings>([])
+    const appRoutes = ref<DynamicRouting[]>([])
 
     /**
      * 动态新增路由
      * @param routes
      * @param router
      */
-    function addDynamicRoutes(routes: DynamicRoutings, router: Router) {
+    function addDynamicRoutes(routes: DynamicRouting[], router: Router) {
       appRoutes.value = routes
       appRoutes.value.forEach((item) =>
         router.addRoute("Admin", {

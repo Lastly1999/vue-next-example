@@ -16,6 +16,10 @@ const publicPath: RouteRecordRaw[] = [
     component: Layout,
     children: [
       {
+        path: "/admin/workbench",
+        component: () => import("@/views/workBench/index.vue"),
+      },
+      {
         path: "/:pathMatch(.*)*", // 捕获所有路由或 404 Not found 路由
         component: () => import("@/views/error/404.vue"),
       },
