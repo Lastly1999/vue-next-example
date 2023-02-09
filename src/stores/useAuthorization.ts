@@ -1,6 +1,7 @@
-import type { TokenInfo, UserInfo } from "@/service/model/authorizationModel"
+import type { DynamicRoutings, TokenInfo, UserInfo } from "@/service/model/authorizationModel"
 import { defineStore } from "pinia"
 import { ref } from "vue"
+import type { Router } from "vue-router"
 
 export const useAuthorization = defineStore(
   "auth",
@@ -34,14 +35,45 @@ export const useAuthorization = defineStore(
       userInfo.value = { ...value }
     }
 
+    // 路由表
+    const appRoutes = ref<DynamicRoutings>([])
+
+    /**
+     * 动态新增路由
+     * @param routes
+     * @param router
+     */
+    function addDynamicRoutes(routes: DynamicRoutings, router: Router) {
+      appRoutes.value = routes
+      appRoutes.value.forEach((item) =>
+        router.addRoute("Admin", {
+          path: item.router || "",
+          name: item.name,
+          component: () => import(`@/${item.viewPath}`),
+        })
+      )
+    }
+
+    const hasPullPermissions = ref(false)
+
+    function setHasPullPermissions(value: boolean) {
+      hasPullPermissions.value = value
+    }
+
     return {
       tokenInfo,
       userInfo,
       setUserInfo,
       setToken,
+      appRoutes,
+      addDynamicRoutes,
+      setHasPullPermissions,
+      hasPullPermissions,
     }
   },
   {
-    persist: true,
+    persist: {
+      paths: ["userInfo", "tokenInfo", "appRoutes"],
+    },
   }
 )

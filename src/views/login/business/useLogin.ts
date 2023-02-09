@@ -1,7 +1,7 @@
 import { reactive, ref } from "vue"
 import service from "@/service"
 import { useRouter } from "vue-router"
-import type { LoginForm } from "./types"
+import type { LoginForm } from "../types"
 import { useAuthorization } from "@/stores/useAuthorization"
 
 const useLogin = (formData: LoginForm) => {
@@ -16,10 +16,14 @@ const useLogin = (formData: LoginForm) => {
 
   const loginSubmitFinish = async (values: LoginForm) => {
     loadingStatus.value = true
-    const { statusCode, data } = await service.authorizationService.login(values).finally(() => (loadingStatus.value = false))
-    if (statusCode === 200) {
-      setToken(data.token)
-      router.push("/admin/workbench")
+    try {
+      const { statusCode, data } = await service.AuthorizationService.login(values)
+      if (statusCode === 200) {
+        setToken(data.token)
+        await router.push("/admin/workbench")
+      }
+    } finally {
+      loadingStatus.value = false
     }
   }
 

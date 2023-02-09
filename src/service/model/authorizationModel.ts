@@ -28,3 +28,25 @@ export interface LoginInfoResponse {
   token: TokenInfo
   userInfo: UserInfo
 }
+
+export interface DynamicRoutingItem {
+  createdAt: string
+  icon: string
+  id: number
+  isShow: number
+  keepalive: number
+  name: string
+  orderNum: number
+  parentId: number
+  perms: string
+  router: string | null
+  type: number
+  updatedAt: string | null
+  viewPath: string | null
+}
+
+export interface DynamicRouting extends DynamicRoutingItem {
+  children: DynamicRoutingItem
+}
+
+export type DynamicRoutings = DynamicRouting[]

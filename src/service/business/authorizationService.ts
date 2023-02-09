@@ -1,8 +1,11 @@
 import httpRequest from "@/utils/http/axios/request"
-import type { LoginForm, LoginInfoResponse } from "../model/authorizationModel"
+import type { DynamicRoutings, LoginForm, LoginInfoResponse } from "../model/authorizationModel"
 
 export default class authorizationService {
-  public login(data: LoginForm) {
+  public static login(data: LoginForm) {
     return httpRequest.httpPost<LoginForm, LoginInfoResponse>("/auth/login", data)
+  }
+  public static getDynamicRoutes() {
+    return httpRequest.httpGet<null, DynamicRoutings>("/auth/menus")
   }
 }

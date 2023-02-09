@@ -1,7 +1,5 @@
-import authorizationService from "./business/authorizationService"
+import AuthorizationService from "./business/authorizationService"
 
-const services = {
-  authorizationService: new authorizationService(),
+export default {
+  AuthorizationService,
 }
-
-export default services
