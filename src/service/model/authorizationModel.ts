@@ -46,7 +46,7 @@ export interface DynamicRoutingItem {
 }
 
 export interface DynamicRouting extends DynamicRoutingItem {
-  children: DynamicRoutingItem
+  children: DynamicRouting[]
 }
 
 export type DynamicRoutings = DynamicRouting[]

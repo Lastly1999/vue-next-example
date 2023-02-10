@@ -11,18 +11,19 @@ const router = createRouter({
 
 const whiteList = ["/login"]
 
-router.beforeEach(async (to, form, next) => {
+router.beforeEach((to, form, next) => {
   NProgress.start()
   const { addDynamicRoutes, hasPullPermissions, setHasPullPermissions } = useAuthorization()
   // 为白名单中存在 即放行
   if (whiteList.includes(to.path)) {
     next()
   } else {
-    if (!hasPullPermissions && to.path !== "/login") {
-      // 请求数据
-      const result = await service.AuthorizationService.getDynamicRoutes()
-      addDynamicRoutes(result.data, router)
-      setHasPullPermissions(true)
+    if (!hasPullPermissions) {
+      service.AuthorizationService.getDynamicRoutes().then((result) => {
+        addDynamicRoutes(result.data, router)
+        setHasPullPermissions(true)
+        next()
+      })
     } else {
       next()
     }

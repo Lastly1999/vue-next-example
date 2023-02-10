@@ -12,11 +12,14 @@ const packUpSetup = () => {
 <template>
   <a-layout h-full>
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo" />
+      <div flex justify-center p-4 flex-wrap items-center>
+        <img width="30" src="@/assets/logo.svg" alt="" />
+        <span v-if="!collapsed" pl-3 text-white text-base font-semibold>ExampleAdmin</span>
+      </div>
       <AppMenu />
     </a-layout-sider>
     <a-layout>
-      <a-layout-header :style="{ background: '#fff' }">
+      <a-layout-header id="app-header">
         <menu-unfold-outlined v-if="collapsed" class="trigger" @click="packUpSetup" />
         <menu-fold-outlined v-else class="trigger" @click="packUpSetup" />
       </a-layout-header>
@@ -26,3 +29,6 @@ const packUpSetup = () => {
     </a-layout>
   </a-layout>
 </template>
+<style lang="scss">
+@import url("./index.scss");
+</style>

@@ -33,6 +33,7 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       cors: true,
+      open: true,
       proxy: {
         [env.VITE_APP_BASE_PROXY_URL]: {
           target: env.VITE_APP_BASE_URL,
