@@ -1,6 +1,5 @@
 import { useAuthorization } from "@/stores/useAuthorization"
 import { createRouter, createWebHistory } from "vue-router"
-import { message } from "ant-design-vue"
 import publicPath from "./core/publicPath"
 import service from "@/service"
 import NProgress from "nprogress"
