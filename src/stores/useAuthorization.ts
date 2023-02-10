@@ -43,21 +43,21 @@ export const useAuthorization = defineStore(
      * @param routes
      * @param router
      */
-    function addDynamicRoutes(routes: DynamicRouting[], router: Router) {
+    function addDynamicRoutes(routes: DynamicRouting[]) {
       appRoutes.value = routes
-      appRoutes.value.forEach((item) =>
-        router.addRoute("Admin", {
-          path: item.router || "",
-          name: item.name,
-          component: () => import(`@/${item.viewPath}`),
-        })
-      )
     }
 
     const hasPullPermissions = ref(false)
 
     function setHasPullPermissions(value: boolean) {
       hasPullPermissions.value = value
+    }
+
+    // 按钮权限
+    const permissions = ref<string[]>([])
+
+    function setPermissions(values: string[]) {
+      permissions.value = [...values]
     }
 
     return {
@@ -69,11 +69,13 @@ export const useAuthorization = defineStore(
       addDynamicRoutes,
       setHasPullPermissions,
       hasPullPermissions,
+      permissions,
+      setPermissions,
     }
   },
   {
     persist: {
-      paths: ["userInfo", "tokenInfo", "appRoutes"],
+      paths: ["userInfo", "tokenInfo", "appRoutes", "permissions"],
     },
   }
 )

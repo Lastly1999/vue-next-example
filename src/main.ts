@@ -5,16 +5,26 @@ import router from "./router"
 import setupAntd from "@/plugins/antd"
 import setupPinia from "@/plugins/pinia"
 import setupNProgress from "@/plugins/nprogress"
+import setupGlobalComponent from "@/components"
+import { permission } from "@/directives/permission"
 import "uno.css"
+import "animate.css"
 
 import "./assets/main.css"
 
-const app = createApp(App)
+function bootstarp() {
+  const app = createApp(App)
 
-setupNProgress()
-setupAntd(app)
-setupPinia(app)
+  app.directive("permission", permission)
 
-app.use(router)
+  setupNProgress()
+  setupAntd(app)
+  setupPinia(app)
+  setupGlobalComponent(app)
 
-app.mount("#app")
+  app.use(router)
+
+  app.mount("#app")
+}
+
+bootstarp()

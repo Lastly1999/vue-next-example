@@ -11,13 +11,13 @@ const publicPath: RouteRecordRaw[] = [
     redirect: "/login",
   },
   {
-    path: "/admin",
+    path: "/",
     name: "Admin",
     component: Layout,
     children: [
       {
         path: "/admin/workbench",
-        component: () => import("@/views/workBench/index.vue"),
+        component: () => import("@/views/workbench/index.vue"),
       },
       {
         path: "/:pathMatch(.*)*", // 捕获所有路由或 404 Not found 路由

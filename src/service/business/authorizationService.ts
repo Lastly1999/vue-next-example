@@ -8,4 +8,7 @@ export default class authorizationService {
   public static getDynamicRoutes() {
     return HttpRequest.httpGet<null, DynamicRoutings>("/auth/menus")
   }
+  public static getPermissions() {
+    return HttpRequest.httpGet<null, string[]>("/auth/permissions")
+  }
 }

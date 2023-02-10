@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import { ref } from "vue"
 import { useAuthorization } from "@/stores/useAuthorization"
-import type { MenuProps } from "ant-design-vue"
 import AppSubMenu from "./AppSubMenu.vue"
+import { useRouter, useRoute } from "vue-router"
+import type { MenuProps } from "ant-design-vue"
 
 const { appRoutes } = useAuthorization()
 
-const selectedKeys = ref<string[]>(["1"])
+const router = useRouter()
 
-const selectMenu: MenuProps["onSelect"] = ({ item }) => {
-  console.log(item)
-}
+const route = useRoute()
+
+const selectMenu: MenuProps["onSelect"] = ({ key }) => router.push(key as string)
 </script>
 
 <template>
-  <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline" @select="selectMenu">
+  <a-menu :selectedKeys="[route.path]" theme="dark" mode="inline" @select="selectMenu">
     <template v-for="item in appRoutes">
       <template v-if="item.children.length === 0">
-        <a-menu-item :key="item.id">
+        <a-menu-item :key="item.router">
           <span v-if="item.children">{{ item.name }}</span>
         </a-menu-item>
       </template>
