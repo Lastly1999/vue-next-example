@@ -3,7 +3,7 @@ import { computed } from "vue"
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue"
 import useLogin from "./business/useLogin"
 
-const { loginSubmitFinish, form } = useLogin({
+const { loginSubmitFinish, form, loadingStatus } = useLogin({
   userName: "",
   passWord: "",
   remember: false,
@@ -43,7 +43,7 @@ const layout = {
           <a class="login-form-forgot" href="">Forgot password</a>
         </a-form-item>
         <a-form-item>
-          <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button"> Log in </a-button>
+          <a-button :disabled="disabled" :loading="loadingStatus" type="primary" html-type="submit" class="login-form-button"> Log in </a-button>
           Or
           <a href="">register now!</a>
         </a-form-item>
@@ -51,11 +51,3 @@ const layout = {
     </div>
   </div>
 </template>
-
-
-
-
-
-
-
-

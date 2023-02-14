@@ -2,6 +2,7 @@
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue"
 import { RouterView } from "vue-router"
 import { ref } from "vue"
+import AppBreadcrumb from "@/layout/components/AppBreadcrumb.vue"
 import AppMenu from "@/layout/components/AppMenu.vue"
 
 const collapsed = ref(false)
@@ -22,6 +23,7 @@ const packUpSetup = () => {
       <a-layout-header id="app-header">
         <menu-unfold-outlined v-if="collapsed" class="trigger" @click="packUpSetup" />
         <menu-fold-outlined v-else class="trigger" @click="packUpSetup" />
+        <AppBreadcrumb />
       </a-layout-header>
       <a-layout-content overflow-hidden>
         <Transition mode="out-in" name="fade-transform" appear>

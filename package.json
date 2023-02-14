@@ -22,6 +22,7 @@
     "pinia-plugin-persistedstate": "^3.0.2",
     "sass": "^1.58.0",
     "vue": "^3.2.45",
+    "vue-request": "^2.0.0-rc.4",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

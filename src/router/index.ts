@@ -48,7 +48,7 @@ router.beforeEach(async (to, form, next) => {
       lazyloadComponent(routes)
       // 设置已拉取权限
       setHasPullPermissions(true)
-      next()
+      next({ path: to.path })
     } else {
       next()
     }

@@ -37,9 +37,9 @@ export default new Interceptor({
     responseInterceptorsCatch: (error) => {
       const { setToken } = useAuthorization()
       if (error.response?.data) {
-        message.error(error.response?.data.message)
         switch (error.response.data.statusCode) {
           case 401:
+            message.error("登陆已过期，请重新登陆")
             setToken({ accessToken: "", refreshToken: "" })
             router.replace("/login")
         }
