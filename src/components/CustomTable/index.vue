@@ -22,6 +22,7 @@ export interface CustomTableProps {
   columns: TableProps["columns"]
   dataSource: TableProps["dataSource"]
   bordered: TableProps["bordered"]
+  loading: TableProps["loading"]
 }
 
 const props = withDefaults(defineProps<CustomTableProps>(), {

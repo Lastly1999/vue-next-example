@@ -14,19 +14,46 @@ const router = createRouter({
 
 const whiteList = ["/login"]
 
+export function routerPackage(menuList: DynamicRouting[]) {
+  return menuList.map((item) => {
+    const currentRouter: any = {
+      path: `${item.router}`,
+      name: `${item.name}`,
+      meta: {
+        title: `${item.name}`,
+      },
+    }
+    if (item.component?.length > 0) {
+      currentRouter.component = modules["../views/"]
+    }
+    if (item.children.length > 0) {
+      currentRouter.children = routerPackage(item.children)
+    } else {
+      currentRouter.component = () => import("@/layout/index.vue")
+    }
+    return currentRouter
+  })
+  // syncMenuList.forEach((item) => router.addRoute("Admin", route))
+}
+
+const loadAsyncRoutes = async () => {
+  // 动态请求后台菜单
+  const { data: routes } = await service.AuthorizationService.getDynamicRoutes()
+  // 获取按钮权限列表
+  const { data: permissions } = await service.AuthorizationService.getPermissions()
+  // 生成路由栈
+  await routerPackage(routes)
+  return {
+    routes,
+    permissions,
+  }
+}
+
 function lazyloadComponent(data: DynamicRouting[]) {
   data.forEach((item) => {
     if (item.children.length > 0) {
       lazyloadComponent(item.children)
     }
-    router.addRoute("Admin", {
-      path: `${item.router}`,
-      name: item.name,
-      meta: {
-        title: item.name,
-      },
-      component: modules[`../${item.viewPath}/index.vue`],
-    })
   })
 }
 
@@ -38,14 +65,11 @@ router.beforeEach(async (to, form, next) => {
     next()
   } else {
     if (!hasPullPermissions) {
-      const { data: routes } = await service.AuthorizationService.getDynamicRoutes()
-      const { data: permissions } = await service.AuthorizationService.getPermissions()
+      const { permissions, routes } = await loadAsyncRoutes()
       // 添加路由表至缓存
       addDynamicRoutes(routes)
       // 添加权限至缓存
       setPermissions(permissions)
-      // 动态添加路由
-      lazyloadComponent(routes)
       // 设置已拉取权限
       setHasPullPermissions(true)
       next({ path: to.path })
